@@ -1,0 +1,137 @@
+<script>
+// =============================================
+// =============================================
+// =============================================
+// Admin instructions: change the values on the right side
+// Note: Keep the quotes and any other punctuation
+const inputMap = {
+    "mos_sponsor_username": 'ChuckTestName',
+    "mos_sponsor_name": 'ChuckTestUsername',
+}
+
+// That's it. Don't edit past this line
+// =============================================
+// =============================================
+// =============================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// =============================================
+// =============================================
+// =============================================
+// DEV SETTINGS
+
+// ID of the popup wrapper so we can observe it
+// To find this ID, open the popup in the editor,
+// then click "Edit op up settings"
+// On the left, scroll down to find "ID attribute"
+const popupWrapperId = '#popup-3a7870da'
+
+// =============================================
+// =============================================
+// =============================================
+
+
+
+// Watch for changes to the document childList or subtree
+// If the desired element exists, we edit and hide the inputs
+function observePopup(selector) {
+    // If the element already exists, call editAndHideInputs()
+    if (document.querySelector(selector)) {
+        editAndHideInputs()
+    }
+
+    // Create a new observer. On change => call editAndHideInputs()
+    const observer = new MutationObserver(mutations => {
+        if (document.querySelector(selector)) {
+            editAndHideInputs()
+        }
+    });
+
+    // Watch for new/removed dom elements
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+// Edit the inputs and hide them
+function editAndHideInputs() {
+    for (const [inputName, value] of Object.entries(inputMap)) {
+        hackInput = getHackInput(inputName)
+
+        if (hackInput) {
+            hideInput(hackInput)
+            setValue(hackInput, value)
+            console.log(`Succes! Set value of ${inputName} to ${value}`)
+        }
+    }
+}
+
+// Find the hack input element by input name
+function getHackInput(inputName) {
+    return document.querySelector(`input[name=${inputName}]`)
+}
+
+// Choose how you want to hide the hacked input
+function hideInput(element) {
+    element.parentElement.parentElement.style.display = 'none';
+}
+
+// Hack for editing react-binded inputs
+function setValue(element, value) {
+    const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
+    const prototype = Object.getPrototypeOf(element);
+    const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
+
+    if (valueSetter && valueSetter !== prototypeValueSetter) {
+        prototypeValueSetter.call(element, value);
+    } else {
+        valueSetter.call(element, value);
+    }
+
+    element.dispatchEvent(new Event('input', { bubbles: true }))
+}
+
+// Main script
+function main() {
+    observePopup(popupWrapperId)
+}
+
+// Call main() after dom content loaded
+document.addEventListener("DOMContentLoaded", function (event) {
+    main()
+});
+
+</script>
