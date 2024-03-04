@@ -6,15 +6,14 @@ Used with [Systeme](https://systeme.io), the landing page builder. Creates hidde
 
 ## Admin Usage
 
-After cloning the capture page, find the Custom HTML block and edit it. At the top of the script, there should be a section that looks like this:
-```js
-const inputMap = {
-    "mos_sponsor_username": 'ChuckTestName',
-    "mos_sponsor_name": 'ChuckTestUsername',
-}
+After cloning the capture page, go to `settings` in the top menu and look for the `keywords` field. It should look like this:
+```json
+{"mos_sponsor_username":"__USERNAME__","mos_sponsor_name":"__NAME__"}
 ```
 
-Edit the right hand side values (`ChuckTestName` and `ChuckTestUsername`)
+- Replace `__USERNAME__` with the user's username
+- Replace `__NAME__` with the user's name
+- Make sure to keep the quotes. You can double click on the words to highlight up to (but not including) the quotes, making it easy to edit
 
 ## The Observed Element
 
