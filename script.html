@@ -2,14 +2,16 @@
 // =============================================
 // =============================================
 // =============================================
-// Admin instructions: change the values on the right side
-// Note: Keep the quotes and any other punctuation
-const inputMap = {
-    "mos_sponsor_username": 'ChuckTestName',
-    "mos_sponsor_name": 'ChuckTestUsername',
-}
-
-// That's it. Don't edit past this line
+// Read a json string from the "keywords" setting and parse it
+const inputMap = (() => {
+    const encodedString = document.querySelector('meta[name=keywords]').getAttribute('content')
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = encodedString;
+    const decodedString = textarea.value;
+    console.log(decodedString);
+    const data = JSON.parse(decodedString);
+    return data;
+})();
 // =============================================
 // =============================================
 // =============================================
