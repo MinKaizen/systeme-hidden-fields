@@ -93,9 +93,10 @@ function editAndHideInputs() {
     for (const [inputName, value] of Object.entries(inputMap)) {
         hackInput = getHackInput(inputName)
 
-        if (hackInput) {
+        if (hackInput && hackInput.dataset.hacked !== 'true') {
             hideInput(hackInput)
             setValue(hackInput, value)
+            hackInput.dataset.hacked = 'true'
             console.log(`Succes! Set value of ${inputName} to ${value}`)
         }
     }
