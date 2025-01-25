@@ -113,7 +113,15 @@ function hideInput(element) {
 
 // Hack for editing react-binded inputs
 function setValue(element, value) {
-    const valueSetter = Object.getOwnPropertyDescriptor(element, 'value').set;
+    const valueProp = Object.getOwnPropertyDescriptor(element, 'value')
+
+    // If the setter is not initialized, set the value directly
+    if (!valueProp || !valueProp.set) {
+        element.value = value
+        return
+    }
+
+    const valueSetter = valueProp.set;
     const prototype = Object.getPrototypeOf(element);
     const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
 
